@@ -7,3 +7,8 @@ venv/
 
 # Vim swap files
 .*.sw?
+
+# IntelliJ project files
+*.iml
+*.ipr
+*.iws
