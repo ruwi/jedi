@@ -1,6 +1,9 @@
-# Vim swap files
-.*.sw?
-
 # Python bytecode
 *.pyc
 *.pyo
+
+# Project-local virtualenv
+venv/
+
+# Vim swap files
+.*.sw?
