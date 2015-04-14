@@ -1,33 +1,49 @@
 # -*- coding: utf-8 -*-
 
+from collections import namedtuple
+
 import pyglet
 from pyglet.window import key
 
+
+class Vec2(namedtuple('Vec2', ('x', 'y'))):
+    """A 2D vector"""
+
+
 class GameLogic(object):
     def __init__(self):
-        self.pos = [20, 20]
-        self.vel = [0, 0]
+        self.pos = Vec2(20, 20)
+        self.vel = Vec2(0, 0)
         self.dt = 10
 
     def head_up(self):
-        self.vel[1] += 1
+        self.vel = self.vel._replace(
+            y = self.vel.y + 1
+        )
 
     def head_down(self):
-        self.vel[1] += -1
+        self.vel = self.vel._replace(
+            y = self.vel.y - 1
+        )
 
     def head_right(self):
-        self.vel[0] += 1
+        self.vel = self.vel._replace(
+            x = self.vel.x + 1
+        )
 
     def head_left(self):
-        self.vel[0] += -1
+        self.vel = self.vel._replace(
+            x = self.vel.x - 1
+        )
 
     def tick(self):
-        for i in (0, 1):
-            self.pos[i] += self.vel[i] * self.dt
+        self.pos = self.pos._replace(
+            x = self.pos.x + self.vel.x * self.dt,
+            y = self.pos.y + self.vel.y * self.dt,
+        )
 
     def stop_moving(self):
-        for i in (0, 1):
-            self.vel[i] = 0
+        self.vel = Vec2(0, 0)
 
 
 class MyWindow(pyglet.window.Window):
