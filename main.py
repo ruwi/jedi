@@ -9,6 +9,13 @@ from pyglet.window import key
 class Vec2(namedtuple('Vec2', ('x', 'y'))):
     """A 2D vector"""
 
+    def __add__(self, other):
+        if not isinstance(other, Vec2):
+            return NotImplemented
+
+        return Vec2(
+            x = self.x + other.x, y = self.y + other.y,
+        )
 
 class GameLogic(object):
     def __init__(self):
@@ -17,30 +24,20 @@ class GameLogic(object):
         self.dt = 10
 
     def head_up(self):
-        self.vel = self.vel._replace(
-            y = self.vel.y + 1
-        )
+        self.vel += Vec2(0, 1)
 
     def head_down(self):
-        self.vel = self.vel._replace(
-            y = self.vel.y - 1
-        )
+        self.vel += Vec2(0, -1)
 
     def head_right(self):
-        self.vel = self.vel._replace(
-            x = self.vel.x + 1
-        )
+        self.vel += Vec2(1, 0)
 
     def head_left(self):
-        self.vel = self.vel._replace(
-            x = self.vel.x - 1
-        )
+        self.vel += Vec2(-1, 0)
 
     def tick(self):
-        self.pos = self.pos._replace(
-            x = self.pos.x + self.vel.x * self.dt,
-            y = self.pos.y + self.vel.y * self.dt,
-        )
+        self.pos += Vec2(
+            x = self.vel.x * self.dt, y = self.vel.y * self.dt)
 
     def stop_moving(self):
         self.vel = Vec2(0, 0)
