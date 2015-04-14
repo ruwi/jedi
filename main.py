@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import pyglet
 from pyglet.window import key
 
