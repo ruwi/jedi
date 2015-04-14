@@ -4,9 +4,20 @@ from pyglet.window import key
 class GameLogic(object):
     def __init__(self):
         self.pos = [20, 20]
+        self.vel = [0, 0]
+        self.dt = 10
 
-    def move_up(self):
-        self.pos[1] += 1
+    def head_up(self):
+        print "head_up"
+        self.vel[1] = 1
+
+    def tick(self):
+        for i in (0, 1):
+            self.pos[i] += self.vel[i] * self.dt
+
+    def stop_moving(self):
+        for i in (0, 1):
+            self.vel[i] = 0
 
 
 class MyWindow(pyglet.window.Window):
@@ -26,9 +37,16 @@ class MyWindow(pyglet.window.Window):
 
         pyglet.clock.schedule_interval(self.on_tick, 1./self.fps)
 
+    def on_key_press(self, symbol, modifiers):
+        if symbol == key.UP:
+            self.game_logic.head_up()
+
+    def on_key_release(self, symbol, modifiers):
+        if symbol == key.UP:
+            self.game_logic.stop_moving()
+
     def on_tick(self, dt):
-        if self.keys[key.UP]:
-            self.game_logic.move_up()
+        self.game_logic.tick()
 
     def on_draw(self):
         self.sprites[0].x, self.sprites[0].y = self.game_logic.pos
