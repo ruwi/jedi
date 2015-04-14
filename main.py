@@ -1,33 +1,55 @@
 # -*- coding: utf-8 -*-
 
+from collections import namedtuple
+import numbers
+
 import pyglet
 from pyglet.window import key
 
+
+class Vec2(namedtuple('Vec2', ('x', 'y'))):
+    """A 2D vector"""
+
+    def __add__(self, other):
+        if not isinstance(other, Vec2):
+            return NotImplemented
+
+        return Vec2(
+            x = self.x + other.x, y = self.y + other.y,
+        )
+
+    def __mul__(self, other):
+        if not isinstance(other, numbers.Number):
+            return NotImplemented
+
+        return Vec2(
+            x = self.x * other, y = self.y * other,
+        )
+
+
 class GameLogic(object):
     def __init__(self):
-        self.pos = [20, 20]
-        self.vel = [0, 0]
+        self.pos = Vec2(20, 20)
+        self.vel = Vec2(0, 0)
         self.dt = 10
 
     def head_up(self):
-        self.vel[1] += 1
+        self.vel += Vec2(0, 1)
 
     def head_down(self):
-        self.vel[1] += -1
+        self.vel += Vec2(0, -1)
 
     def head_right(self):
-        self.vel[0] += 1
+        self.vel += Vec2(1, 0)
 
     def head_left(self):
-        self.vel[0] += -1
+        self.vel += Vec2(-1, 0)
 
     def tick(self):
-        for i in (0, 1):
-            self.pos[i] += self.vel[i] * self.dt
+        self.pos += self.vel * self.dt
 
     def stop_moving(self):
-        for i in (0, 1):
-            self.vel[i] = 0
+        self.vel = Vec2(0, 0)
 
 
 class MyWindow(pyglet.window.Window):
@@ -70,7 +92,7 @@ class MyWindow(pyglet.window.Window):
         self.game_logic.tick()
 
     def on_draw(self):
-        self.sprites[0].x, self.sprites[0].y = self.game_logic.pos
+        self.sprites[0].position = self.game_logic.pos
 
         pyglet.gl.glClearColor(1., 1., 1., 1.)
         self.clear()
