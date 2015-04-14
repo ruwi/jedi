@@ -12,7 +12,7 @@ class Vec2(namedtuple('Vec2', ('x', 'y'))):
 
     def __add__(self, other):
         if not isinstance(other, Vec2):
-            raise NotImplementedError("You can add only other vector")
+            return NotImplemented
 
         return Vec2(
             x = self.x + other.x, y = self.y + other.y,
@@ -20,7 +20,7 @@ class Vec2(namedtuple('Vec2', ('x', 'y'))):
 
     def __mul__(self, other):
         if not isinstance(other, numbers.Number):
-            raise NotImplementedError("You can multiply only by number")
+            return NotImplemented
 
         return Vec2(
             x = self.x * other, y = self.y * other,
