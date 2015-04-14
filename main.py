@@ -26,6 +26,13 @@ class Vec2(namedtuple('Vec2', ('x', 'y'))):
             x = self.x * other, y = self.y * other,
         )
 
+    def __rmul__(self, other):
+        return self * other
+
+    def __sub__(self, other):
+        return self + (-1) * other
+
+
 
 class GameLogic(object):
     def __init__(self):
