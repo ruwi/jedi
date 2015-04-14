@@ -92,7 +92,7 @@ class MyWindow(pyglet.window.Window):
         self.game_logic.tick()
 
     def on_draw(self):
-        self.sprites[0].x, self.sprites[0].y = self.game_logic.pos
+        self.sprites[0].position = self.game_logic.pos
 
         pyglet.gl.glClearColor(1., 1., 1., 1.)
         self.clear()
