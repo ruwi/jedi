@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from collections import namedtuple
+import numbers
 
 import pyglet
 from pyglet.window import key
@@ -16,6 +17,15 @@ class Vec2(namedtuple('Vec2', ('x', 'y'))):
         return Vec2(
             x = self.x + other.x, y = self.y + other.y,
         )
+
+    def __mul__(self, other):
+        if not isinstance(other, numbers.Number):
+            return NotImplemented
+
+        return Vec2(
+            x = self.x * other, y = self.y * other,
+        )
+
 
 class GameLogic(object):
     def __init__(self):
@@ -36,8 +46,7 @@ class GameLogic(object):
         self.vel += Vec2(-1, 0)
 
     def tick(self):
-        self.pos += Vec2(
-            x = self.vel.x * self.dt, y = self.vel.y * self.dt)
+        self.pos += self.vel * self.dt
 
     def stop_moving(self):
         self.vel = Vec2(0, 0)
