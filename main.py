@@ -3,6 +3,8 @@ from pyglet.window import key
 
 
 class MyWindow(pyglet.window.Window):
+    """Main Window class"""
+
     def __init__(self, batch=None):
         super(MyWindow, self).__init__()
         self.batch = batch
@@ -17,6 +19,8 @@ class MyWindow(pyglet.window.Window):
 
 
 class App(object):
+    """Main application class"""
+
     def __init__(self):
         self.app = pyglet.app
         self.batch = pyglet.graphics.Batch()
