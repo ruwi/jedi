@@ -79,6 +79,7 @@ class MyWindow(pyglet.window.Window):
         self.fps = 60
 
         image = pyglet.image.load("jedi.png")
+        image.anchor_x, image.anchor_y = image.width / 2, image.height / 2
         self.sprites = [pyglet.sprite.Sprite(image, batch=self.batch)]
 
         self.keys = key.KeyStateHandler()
