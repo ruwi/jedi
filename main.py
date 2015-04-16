@@ -56,10 +56,10 @@ class GameLogic(object):
         self.vel += Vec2(-1, 0)
 
     def rotate_left(self):
-        self.rot_speed -= 1
+        self.rot_speed += 1
 
     def rotate_right(self):
-        self.rot_speed += 1
+        self.rot_speed -= 1
 
     def tick(self):
         self.pos += self.vel * self.dt
