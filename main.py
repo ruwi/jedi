@@ -102,6 +102,8 @@ class MyWindow(pyglet.window.Window):
 
     def on_draw(self):
         self.sprites[0].position = self.game_logic.pos
+        # Pyglet uses clockwise rotations.
+        self.sprites[0].rotation = -self.game_logic.orientation
 
         pyglet.gl.glClearColor(1., 1., 1., 1.)
         self.clear()
