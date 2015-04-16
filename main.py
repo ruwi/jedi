@@ -69,7 +69,7 @@ class MyWindow(pyglet.window.Window):
         self.game_logic = GameLogic()
         self.fps = 60
 
-        image = pyglet.image.load("circle.png")
+        image = pyglet.image.load("jedi.png")
         self.sprites = [pyglet.sprite.Sprite(image, batch=self.batch)]
 
         self.keys = key.KeyStateHandler()
