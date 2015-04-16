@@ -90,12 +90,16 @@ class MyWindow(pyglet.window.Window):
             key.DOWN: self.game_logic.head_down,
             key.RIGHT: self.game_logic.head_right,
             key.LEFT: self.game_logic.head_left,
+            key.A: self.game_logic.rotate_left,
+            key.D: self.game_logic.rotate_right,
         }
         self.key_up_actions = {
             key.UP: self.game_logic.head_down,
             key.DOWN: self.game_logic.head_up,
             key.RIGHT: self.game_logic.head_left,
             key.LEFT: self.game_logic.head_right,
+            key.A: self.game_logic.rotate_right,
+            key.D: self.game_logic.rotate_left,
         }
 
     def on_key_press(self, symbol, modifiers):
