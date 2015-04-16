@@ -38,6 +38,9 @@ class GameLogic(object):
     def __init__(self):
         self.pos = Vec2(20, 20)
         self.vel = Vec2(0, 0)
+        # 0 is right, 90 is up, as in polar coordinates.
+        self.orientation = 90
+        self.rot_speed = 0
         self.dt = 10
 
     def head_up(self):
@@ -52,8 +55,15 @@ class GameLogic(object):
     def head_left(self):
         self.vel += Vec2(-1, 0)
 
+    def rotate_left(self):
+        self.rot_speed += 1
+
+    def rotate_right(self):
+        self.rot_speed -= 1
+
     def tick(self):
         self.pos += self.vel * self.dt
+        self.orientation += self.rot_speed * self.dt
 
     def stop_moving(self):
         self.vel = Vec2(0, 0)
@@ -68,7 +78,8 @@ class MyWindow(pyglet.window.Window):
         self.game_logic = GameLogic()
         self.fps = 60
 
-        image = pyglet.image.load("circle.png")
+        image = pyglet.image.load("jedi.png")
+        image.anchor_x, image.anchor_y = image.width / 2, image.height / 2
         self.sprites = [pyglet.sprite.Sprite(image, batch=self.batch)]
 
         self.keys = key.KeyStateHandler()
@@ -81,12 +92,16 @@ class MyWindow(pyglet.window.Window):
             key.DOWN: self.game_logic.head_down,
             key.RIGHT: self.game_logic.head_right,
             key.LEFT: self.game_logic.head_left,
+            key.A: self.game_logic.rotate_left,
+            key.D: self.game_logic.rotate_right,
         }
         self.key_up_actions = {
             key.UP: self.game_logic.head_down,
             key.DOWN: self.game_logic.head_up,
             key.RIGHT: self.game_logic.head_left,
             key.LEFT: self.game_logic.head_right,
+            key.A: self.game_logic.rotate_right,
+            key.D: self.game_logic.rotate_left,
         }
 
     def on_key_press(self, symbol, modifiers):
@@ -100,6 +115,8 @@ class MyWindow(pyglet.window.Window):
 
     def on_draw(self):
         self.sprites[0].position = self.game_logic.pos
+        # Pyglet uses clockwise rotations.
+        self.sprites[0].rotation = -self.game_logic.orientation
 
         pyglet.gl.glClearColor(1., 1., 1., 1.)
         self.clear()
