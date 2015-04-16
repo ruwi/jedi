@@ -38,7 +38,8 @@ class GameLogic(object):
     def __init__(self):
         self.pos = Vec2(20, 20)
         self.vel = Vec2(0, 0)
-        self.look_at = Vec2(0, 1)
+        # 0 is right, 90 is up, as in polar coordinates.
+        self.orientation = 90
         self.dt = 10
 
     def head_up(self):
