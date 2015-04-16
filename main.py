@@ -40,6 +40,7 @@ class GameLogic(object):
         self.vel = Vec2(0, 0)
         # 0 is right, 90 is up, as in polar coordinates.
         self.orientation = 90
+        self.rot_speed = 0
         self.dt = 10
 
     def head_up(self):
