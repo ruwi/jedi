@@ -63,6 +63,7 @@ class GameLogic(object):
 
     def tick(self):
         self.pos += self.vel * self.dt
+        self.orientation += self.rot_speed * self.dt
 
     def stop_moving(self):
         self.vel = Vec2(0, 0)
